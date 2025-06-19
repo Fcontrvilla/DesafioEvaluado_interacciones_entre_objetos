@@ -33,7 +33,7 @@ class Tienda(ABC):            #clase abstracta
         pass # Implementación específica en cada subclase 
 
 class Restaurante(Tienda):
-    TIPO = "Restaurante" # atributo de clase para el tipo de tienda 
+    tipo_tienda = "Restaurante" # atributo de clase para el tipo de tienda 
 
     def __init__(self, nombre, costo_delivery):
         super().__init__(nombre, costo_delivery)
@@ -43,7 +43,7 @@ class Restaurante(Tienda):
         nuevo_producto = Producto(nombre, precio, 0)
         
         
-        for i, p_existente in enumerate(self.get_productos()):  # En Restaurante, el stock no se modifica si se añade nuevamente 
+        for i, p_existente in enumerate(self.get_productos()):  # en restaurante, el stock no se modifica si se añade nuevamente 
             if p_existente == nuevo_producto:               
                 print(f"Producto '{nombre}' ya existe en Restaurante.  Stock en 0.")
                 return
@@ -54,13 +54,13 @@ class Restaurante(Tienda):
 
 
     def listar_productos(self):
-        if not self.get_productos():
+        if not self.get_productos():  #control de error
             return "No hay productos en este restaurante."
         
-        listado = f"Productos en {self.get_nombre()} ({Restaurante.TIPO}):\n"
+        listado = f"Productos en {self.get_nombre()} ({Restaurante.tipo_tienda}):\n"
         for producto in self.get_productos():
             
-            listado += f"- {producto.get_nombre()}, Precio: ${producto.get_precio()}\n" # stock no muestra en rest.
+            listado += f"- {producto.get_nombre()}, Precio: ${producto.get_precio()}\n" # stock no se muestra en rest.
         return listado
 
     def realizar_venta(self, nombre_producto, cantidad):
@@ -73,7 +73,7 @@ class Restaurante(Tienda):
         pass 
 
 class Supermercado(Tienda):
-    TIPO = "Supermercado" 
+    tipo_tienda = "Supermercado" 
 
     def __init__(self, nombre, costo_delivery):
         super().__init__(nombre, costo_delivery)
@@ -124,7 +124,7 @@ class Supermercado(Tienda):
         
 
 class Farmacia(Tienda):
-    TIPO = "Farmacia" 
+    tipo_tienda = "Farmacia" 
 
     def __init__(self, nombre, costo_delivery):
         super().__init__(nombre, costo_delivery)
@@ -146,7 +146,7 @@ class Farmacia(Tienda):
         if not self.get_productos():
             return "No hay productos en esta farmacia."
         
-        listado = f"Productos en {self.get_nombre()} ({Farmacia.TIPO}):\n"
+        listado = f"Productos en {self.get_nombre()} ({Farmacia.tipo_tienda}):\n"
         for producto in self.get_productos():
             precio_info = f"Precio: ${producto.get_precio():.2f}"
             if producto.get_precio() > 15000: # Mensaje de envío gratis 

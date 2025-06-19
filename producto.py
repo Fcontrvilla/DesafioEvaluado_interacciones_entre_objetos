@@ -1,17 +1,16 @@
 
 
-class Producto:
+class Producto:   
     def __init__(self, nombre, precio, stock=0):
        
-        self.__nombre = nombre  #privado
+        self.__nombre = nombre  #privado  Encapsulamineto
         self.__precio = precio  #privado
         self.__stock = self.validar_stock(stock) # Validamos el stock al inicio
 
     def validar_stock(self, stock):  # stock nunca menor que 0
-       
-        return max(0, stock)  #si stock es menor que 0 asigna 0
+       return max(0, stock)  #si stock es menor que 0 asigna 0
 
-    # Getters accede a los atributos privados
+    # Getters accede a los atributos privados __xxx
     def get_nombre(self): 
         return self.__nombre
 
@@ -26,17 +25,18 @@ class Producto:
         self.__stock = self.validar_stock(nuevo_stock)
 
    
-    def __eq__(self, other):   # Compara si dos productos son iguales segun nombre
-        if isinstance(other, Producto):
+    def __eq__(self, other):   # Compara si dos productos son iguales segun nombre   ---sobrecarga
+        
+        if isinstance(other, Producto):  #función integrada que verifica si un objeto es una instancia de una clase específica o de una subclase de esta
             return self.__nombre.lower() == other.get_nombre().lower()
         return False
 
-    def __add__(self, other):  #suma stocks de productos con el mismo nombre. ----Retorna un nuevo Producto
+    def __add__(self, other):  #suma stocks de productos con el mismo nombre. ----sobrecarga
         
         if isinstance(other, Producto) and self.__eq__(other):
             # Conserva el precio del primer ingreso
-            return Producto(self.__nombre, self.__precio, self.__stock + other.get_stock())
-        raise TypeError("Solo se pueden sumar productos del mismo tipo con el mismo nombre.")
+            return Producto(self.__nombre, self.__precio, self.__stock + other.get_stock()) #conserva nombre y precio, suma stock
+        raise TypeError("Solo se pueden sumar productos con el mismo nombre.")
 
     
     
