@@ -98,7 +98,7 @@ class Supermercado(Tienda):
         if not self.get_productos():
             return "No hay productos en este supermercado."
         
-        listado = f"Productos en {self.get_nombre()} ({Supermercado.TIPO}):\n"
+        listado = f"Productos en {self.get_nombre()} ({Supermercado.tipo_tienda}):\n"
         for producto in self.get_productos():
             stock_info = f"Stock: {producto.get_stock()}"
             if producto.get_stock() < 10: #stock bajo
@@ -113,11 +113,11 @@ class Supermercado(Tienda):
                     print(f"No hay stock de '{nombre_producto}' en '{self.get_nombre()}'.")
                     return
                 
-                # Vender solo la cantidad disponible 
+                # vender solo la cantidad disponible 
                 cantidad_a_vender = min(cantidad, producto.get_stock())
                 
                 nuevo_stock = producto.get_stock() - cantidad_a_vender
-                producto.set_stock(nuevo_stock) # Colaboracion: Uso de setter de Producto
+                producto.set_stock(nuevo_stock) # colaboracion uso de setter de Producto
                 print(f"Venta de {cantidad_a_vender} unidades de '{nombre_producto}' realizada en '{self.get_nombre()}'. Stock restante: {producto.get_stock()}")
                 return
         print(f"Producto '{nombre_producto}' no encontrado en '{self.get_nombre()}'.")

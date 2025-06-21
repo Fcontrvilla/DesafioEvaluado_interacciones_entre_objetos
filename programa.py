@@ -1,12 +1,11 @@
 
 
 from tienda import Restaurante, Supermercado, Farmacia
-from producto import Producto # Aunque no instanciamos Producto directamente aquí, es buena práctica si interactuamos con sus atributos o métodos
+from producto import Producto 
 
 
 
-def crear_tienda():
-    """Solicita al usuario los datos para crear una tienda y la retorna."""
+def crear_tienda():  #solicita los datos para crear una tienda    
     print("\n--- Crear Nueva Tienda ---")
     nombre = input("Ingrese el nombre de la tienda: ")
     while True:
@@ -16,7 +15,7 @@ def crear_tienda():
                 raise ValueError
             break
         except ValueError:
-            print("Costo de delivery inválido. Por favor, ingrese un número no negativo.")
+            print("Costo de delivery inválido. Por favor, ingrese un número positivo.")
 
     while True:
         tipo = input("Ingrese el tipo de tienda (Restaurante, Supermercado, Farmacia): ").strip().lower()
@@ -29,8 +28,8 @@ def crear_tienda():
         else:
             print("Tipo de tienda no válido. Por favor, intente de nuevo.")
 
-def ingresar_productos_a_tienda(tienda):
-    """Permite al usuario ingresar productos a la tienda seleccionada."""
+def ingresar_productos_a_tienda(tienda): #para ingresar productos a la tienda seleccionada
+    
     while True:
         print(f"\n--- Ingresar Productos a '{tienda.get_nombre()}' ({tienda.__class__.__name__}) ---")
         nombre_producto = input("Ingrese el nombre del producto (o 'salir' para terminar): ").strip()
@@ -46,7 +45,7 @@ def ingresar_productos_a_tienda(tienda):
             except ValueError:
                 print("Precio inválido. Por favor, ingrese un número no negativo.")
 
-        stock_input = input(f"Ingrese el stock de '{nombre_producto}' (presione Enter para stock 0): ").strip()
+        stock_input = input(f"Ingrese el stock de '{nombre_producto}' (presione Enter para stock 0): ")   #.strip()
         stock = 0
         if stock_input:
             while True:
@@ -55,29 +54,31 @@ def ingresar_productos_a_tienda(tienda):
                     break
                 except ValueError:
                     print("Stock inválido. Por favor, ingrese un número entero.")
-                    stock_input = input(f"Ingrese el stock de '{nombre_producto}' (presione Enter para stock 0): ").strip()
+                    stock_input = input(f"Ingrese el stock de '{nombre_producto}' (presione Enter para stock 0): ")  #.strip()
         
         tienda.ingresar_producto(nombre_producto, precio, stock)
 
-def main():
-    """Lógica principal del programa."""
+def main():  #principal para manejo de todo
+   
     tienda = crear_tienda() # Se solicita la creacion de la tienda 
     
     ingresar_productos_a_tienda(tienda) # Se solicita ingresar productos hasta que el usuario indique lo contrario 
 
     while True:
-        print("\n--- Opciones de la Tienda ---")
-        print("1. Listar productos")
-        print("2. Realizar venta")
-        print("3. Salir del programa")
+        print("""\n--- Opciones de la Tienda ---
+         1. Listar productos
+         2. Realizar venta
+         3. Salir del programa
+              """)
         
-        opcion = input("Seleccione una opción: ").strip()
+        opcion = input("Seleccione una opción: ")   #.strip()
 
         if opcion == '1':
-            print(tienda.listar_productos()) # Llamado al método de la instancia 
+            print(tienda.listar_productos()) # llama al método de la instancia 
         elif opcion == '2':
             print("\n--- Realizar Venta ---")
             nombre_producto = input("Ingrese el nombre del producto a vender: ").strip()
+            
             while True:
                 try:
                     cantidad = int(input(f"Ingrese la cantidad de '{nombre_producto}' a vender: "))
@@ -86,7 +87,9 @@ def main():
                     break
                 except ValueError:
                     print("Cantidad inválida. Por favor, ingrese un número entero positivo.")
-            tienda.realizar_venta(nombre_producto, cantidad) # Llamado al método de la instancia 
+
+            tienda.realizar_venta(nombre_producto, cantidad) # llama al método de la instancia 
+            
         elif opcion == '3':
             print("Saliendo del programa. ¡Hasta luego!")
             break # Finaliza la ejecución 
